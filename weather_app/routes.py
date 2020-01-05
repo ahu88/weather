@@ -1,5 +1,5 @@
 import requests
-from flask import render_template, request, flash
+from flask import render_template, request, flash, url_for, redirect
 from weather_app import app, db
 
 from weather_app.forms import AddForm, DeleteForm
@@ -9,7 +9,6 @@ from weather_app.models import City
 @app.route('/', methods=['GET', 'POST'])
 def index():
     url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid=3bc3653df522d33001dfe694ef6491d4'
-    
     
     #########################################################################
     #new_city = request.form.get('add')
@@ -24,7 +23,7 @@ def index():
 
     #then delete or add depending on which form validated
     #########################################################################
-
+    
     form1 = AddForm()
     form2 = DeleteForm()
 
@@ -69,6 +68,9 @@ def index():
 
             else:
                 flash ('City does not exist', 'danger')
+
+        #make sure all POST requests redirect to a different view upon completion; and not render templates themselves
+        return redirect(url_for('index'))
         
     cities = City.query.all()
 
