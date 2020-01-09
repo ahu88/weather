@@ -12,7 +12,7 @@ class AddForm(FlaskForm):
     #submit button
     submit1 = SubmitField('Add')
     
-    ######### DOESN'T WORK WHY ######################################################## 
+    #########
     def validate_name(self, name): 
         print("VALIDATE", name.data)
         city = City.query.filter_by(name=name.data).first()
