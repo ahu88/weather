@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title %}
+    <title>How's the Weather? - {{ title }}</title>
+    {% else %}
+    <title>How's the Weather?</title>
+    {% endif %}
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/">How's the Weather?</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{{ url_for('index_get') }}">Home</a>
+              </div>
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                    <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+    <!--
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    How's the Weather?
+                </h1>
+            </div>
+        </div>
+    </section>
+-->
+
+    <section class = "section">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-md-4"></div>
+                    <!-- function to get and output flashed messages that are sent to this template -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        <!-- if messages is not empty = there are flashed messages to display-->
+                        {% if messages %}
+                            <!-- get two values from each message -->
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} col-lg-4" role="alert"> <!-- category = 'success' for registration-->
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+
+                </div>
+                <!-- content block, allows child templates to override with data that they send in-->
+                {% block content %}{% endblock %}
+            </div> 
+        </div>
+    </section>
+    
+
+    <footer class="footer">
+    </footer>
+</body>
+
+</html>
